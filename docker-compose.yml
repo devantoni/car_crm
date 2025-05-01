@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  app:
+    build: .
+    container_name: laravel-crm-app
+    volumes:
+      - .:/var/www/html                # Mount the source code
+      - ./000-default.conf:/etc/apache2/sites-available/000-default.conf # Mount the custom Apache config
+    ports:
+      - 8080:80                        # Map port 8080 of your host to port 80 in the container
+    depends_on:
+      - db                             # Wait for the database to start before app container
+    restart: unless-stopped            # Restart policy in case of crashes
+
+  db:
+    image: mariadb:10.2.7
+    container_name: laravel-crm-db
+    restart: always                    # Always restart the database container
+    environment:
+      MYSQL_ROOT_PASSWORD: root        # Set the root password
+      MYSQL_DATABASE: laravel_crm      # Initial database name
+      MYSQL_USER: laravel_user         # Database user
+      MYSQL_PASSWORD: password         # Password for the database user
+    ports:
+      - 3306:3306                      # Expose port 3306 for MySQL connections
+    volumes:
+      - mysql-data:/var/lib/mysql      # Persist MySQL data with a named volume
+
+volumes:
+  mysql-data:
