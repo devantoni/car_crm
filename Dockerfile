@@ -33,6 +33,9 @@ WORKDIR /var/www/html
 # Copy source code
 COPY . /var/www/html
 
+# Copy .env.example to .env
+RUN cp /var/www/html/.env.example /var/www/html/.env
+
 # Copy startup script and make it executable
 COPY start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
