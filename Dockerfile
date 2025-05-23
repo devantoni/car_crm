@@ -45,4 +45,5 @@ RUN chown -R www-data:www-data /var/www/html \
 EXPOSE 80
 
 # Use startup script as entrypoint
+ENTRYPOINT ["/usr/local/bin/start.sh"]
 CMD ["/usr/local/bin/start.sh"]
