@@ -33,9 +33,6 @@ WORKDIR /var/www/html
 # Copy source code
 COPY . /var/www/html
 
-# Copy .env.example to .env
-RUN cp /var/www/html/.env.example /var/www/html/.env
-
 # Copy startup script and make it executable
 COPY start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
@@ -47,6 +44,7 @@ RUN chown -R www-data:www-data /var/www/html \
 # Expose port
 EXPOSE 80
 
+#ENTRYPOINT ["/usr/local/bin/start.sh"]
+
 # Use startup script as entrypoint
-ENTRYPOINT ["/usr/local/bin/start.sh"]
 CMD ["/usr/local/bin/start.sh"]
